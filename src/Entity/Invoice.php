@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
@@ -13,7 +14,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *  attributes={
  * "pagination_enabled"=true,
  * "order"={"amout": "desc"}
- * }
+ * },
+ * normalizationContext={"groups"={"invoices_read"}}
  * )
  * @ApiFilter(
  *   OrderFilter::class
@@ -25,32 +27,38 @@ class Invoice
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"invoices_read", "customers_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"invoices_read", "customers_read"})
      */
     private $amout;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"invoices_read", "customers_read"})
      */
     private $sentAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"invoices_read", "customers_read"})
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"invoices_read"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"invoices_read", "customers_read"})
      */
     private $chrono;
 
