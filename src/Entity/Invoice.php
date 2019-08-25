@@ -3,9 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
+ * @ApiResource(
+ *  attributes={
+ * "pagination_enabled"=true,
+ * "order"={"amout": "desc"}
+ * }
+ * )
+ * @ApiFilter(
+ *   OrderFilter::class
+ * )
  */
 class Invoice
 {
